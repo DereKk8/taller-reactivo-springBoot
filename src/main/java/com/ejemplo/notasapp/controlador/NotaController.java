@@ -1,5 +1,6 @@
 package com.ejemplo.notasapp.controlador;
 
+import com.ejemplo.notasapp.modelo.Materia;
 import com.ejemplo.notasapp.modelo.Nota;
 import com.ejemplo.notasapp.repositorio.RepositorioNota;
 import com.ejemplo.notasapp.repositorio.RepositorioEstudiante;
@@ -79,15 +80,15 @@ public class NotaController {
     @PostMapping("/promedio")
     public String calcularPromedio(@RequestParam Long estudianteId,
             @RequestParam String materia,
-            Model model) {
-        double promedio = servicioNota.calcularPromedioPorMateria(estudianteId, materia);
+            Model model, Materia materiaF) {
+        double promedio = servicioNota.calcularPromedioPorMateria(estudianteId, materiaF);
         model.addAttribute("promedio", promedio);
         model.addAttribute("estudianteId", estudianteId);
         model.addAttribute("materia", materia);
         return "nota-promedio";
     }
 
-    @GetMapping("/estudiantes/{estudianteId}/materia/{materiaId}")
+    @GetMapping("/{estudianteId}/materia/{materiaId}")
     public String notasPorMateria(@PathVariable("estudianteId") Long estudianteId,
             @PathVariable("materiaId") Long materiaId,
             Model model) {

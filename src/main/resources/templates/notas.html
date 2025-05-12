@@ -21,4 +21,10 @@
   </li>
 </ul>
 <a th:href="@{/notas/{id}/promedio(id=${estudianteId})}">Calcular nota final</a><br>
+<form th:action="@{'/notas/' + ${estudianteId} + '/materia/' + materiaId}" method="get" style="margin-top: 10px;">
+    <label for="materiaId">Ver notas por materia (ID):</label>
+    <input type="number" id="materiaId" name="materiaId" min="1" required />
+    <button type="submit" onclick="this.form.action='/notas/' + document.getElementById('estudianteIdHidden').value + '/materia/' + document.getElementById('materiaId').value;">Ir</button>
+    <input type="hidden" id="estudianteIdHidden" th:value="${estudianteId}" />
+</form>
 <a th:href="@{/estudiantes}">Volver a Estudiantes</a>

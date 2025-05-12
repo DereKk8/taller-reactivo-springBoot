@@ -1,6 +1,7 @@
 package com.ejemplo.notasapp.servicio;
 
 import com.ejemplo.notasapp.modelo.Nota;
+import com.ejemplo.notasapp.modelo.Materia;
 import com.ejemplo.notasapp.repositorio.RepositorioNota;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,10 +14,11 @@ public class ServicioNota {
     @Autowired
     private RepositorioNota repositorioNota;
 
-    public List<Nota> obtenerNotasPorEstudianteYMateria(Long estudianteId, String materia) {
+    public List<Nota> obtenerNotasPorEstudianteYMateria(Long estudianteId, Materia materia) {
         return repositorioNota.findByEstudianteIdAndMateria(estudianteId, materia);
     }
-    public double calcularPromedioPorMateria(Long estudianteId, String materia) {
+
+    public double calcularPromedioPorMateria(Long estudianteId, Materia materia) {
         List<Nota> notas = obtenerNotasPorEstudianteYMateria(estudianteId, materia);
         double sumaPonderada = notas.stream()
                 .mapToDouble(n -> n.getValor() * n.getPorcentaje())
@@ -25,7 +27,7 @@ public class ServicioNota {
                 .mapToDouble(Nota::getPorcentaje)
                 .sum();
         return totalPorcentaje > 0 ? sumaPonderada / totalPorcentaje : null;
-        //return notas.stream().mapToDouble((Nota::getValor)).average().orElse(0.0);
+        // return notas.stream().mapToDouble((Nota::getValor)).average().orElse(0.0);
     }
 
 }
