@@ -2,8 +2,6 @@ package com.ejemplo.notasapp.controlador;
 
 import com.ejemplo.notasapp.modelo.Estudiante;
 import com.ejemplo.notasapp.repositorio.RepositorioEstudiante;
-import com.ejemplo.notasapp.repositorio.RepositorioNota;
-import com.ejemplo.notasapp.repositorio.RepositorioMateria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,12 +13,6 @@ public class EstudianteController {
 
     @Autowired
     private RepositorioEstudiante estudianteRepo;
-
-    @Autowired
-    private RepositorioNota notaRepo;
-
-    @Autowired
-    private RepositorioMateria materiaRepo;
 
     @GetMapping
     public String listar(Model model) {

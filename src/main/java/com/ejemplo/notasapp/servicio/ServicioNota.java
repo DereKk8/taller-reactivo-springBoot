@@ -30,4 +30,12 @@ public class ServicioNota {
         // return notas.stream().mapToDouble((Nota::getValor)).average().orElse(0.0);
     }
 
+    public double calcularNotaFinal(Long estudianteId, Materia materia) {
+        List<Nota> notas = obtenerNotasPorEstudianteYMateria(estudianteId, materia);
+        double sumaPonderada = notas.stream()
+                .mapToDouble(n -> n.getValor() * n.getPorcentaje() / 100)
+                .sum();
+        return sumaPonderada;
+    }
+
 }
