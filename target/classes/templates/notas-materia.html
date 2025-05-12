@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Notas por Materia</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+    <h2>Notas de <span th:text="${estudianteNombre}"></span> en <span th:text="${materiaNombre}"></span></h2>
+    <table class="table table-bordered mt-3">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Observación</th>
+            <th>Valor</th>
+            <th>Porcentaje</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="nota : ${notas}">
+            <td th:text="${nota.id}"></td>
+            <td th:text="${nota.observacion}"></td>
+            <td th:text="${nota.valor}"></td>
+            <td th:text="${nota.porcentaje}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html> 
