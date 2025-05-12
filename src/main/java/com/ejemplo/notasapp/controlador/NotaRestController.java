@@ -8,6 +8,8 @@ import com.ejemplo.notasapp.repositorio.RepositorioEstudiante;
 import com.ejemplo.notasapp.repositorio.RepositorioMateria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import com.ejemplo.notasapp.servicio.ServicioNota;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +26,9 @@ public class NotaRestController {
 
     @Autowired
     private RepositorioMateria materiaRepo;
+
+    @Autowired
+    private ServicioNota servicioNota;
 
     @GetMapping
     public List<Nota> listar() {
@@ -70,5 +75,12 @@ public class NotaRestController {
     @GetMapping("/estudiante/{estudianteId}")
     public List<Nota> listarPorEstudiante(@PathVariable Long estudianteId) {
         return notaRepo.findByEstudianteId(estudianteId);
+    }
+
+    @GetMapping("/nota-final/{estudianteId}/materia/{materiaId}")
+    public ResponseEntity<Double> getNotaFinal(@PathVariable Long estudianteId, @PathVariable Long materiaId) {
+        Materia materia = materiaRepo.findById(materiaId).orElseThrow();
+        Double notaFinal = servicioNota.calcularNotaFinal(estudianteId, materia);
+        return ResponseEntity.ok(notaFinal);
     }
 }

@@ -98,9 +98,11 @@ public class NotaController {
                 .toList();
         var estudiante = estudianteRepo.findById(estudianteId).orElseThrow();
         var materia = materiaRepo.findById(materiaId).orElseThrow();
+        Double notaFinal = servicioNota.calcularNotaFinal(estudianteId, materia);
         model.addAttribute("notas", notas);
         model.addAttribute("estudianteNombre", estudiante.getNombre() + " " + estudiante.getApellido());
         model.addAttribute("materiaNombre", materia.getNombre());
+        model.addAttribute("notaFinal", notaFinal != null ? String.format("%.2f", notaFinal) : "--");
         return "notas-materia";
     }
 
