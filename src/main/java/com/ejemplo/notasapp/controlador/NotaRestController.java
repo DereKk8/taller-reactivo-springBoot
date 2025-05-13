@@ -9,6 +9,8 @@ import com.ejemplo.notasapp.repositorio.RepositorioMateria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.ejemplo.notasapp.servicio.ServicioNota;
 
 import java.util.List;
@@ -41,6 +43,7 @@ public class NotaRestController {
     }
 
     @PostMapping
+    @Transactional
     public Nota crear(@RequestBody Nota nota) {
         if (nota.getEstudiante() != null && nota.getEstudiante().getId() != null) {
             Estudiante estudiante = estudianteRepo.findById(nota.getEstudiante().getId()).orElseThrow();
@@ -75,6 +78,12 @@ public class NotaRestController {
     @GetMapping("/estudiante/{estudianteId}")
     public List<Nota> listarPorEstudiante(@PathVariable Long estudianteId) {
         return notaRepo.findByEstudianteId(estudianteId);
+    }
+
+    @GetMapping("/estudiante/{estudianteId}/materia/{materiaId}")
+    public List<Nota> listarPorEstudianteYMateria(@PathVariable Long estudianteId, @PathVariable Long materiaId) {
+        Materia materia = materiaRepo.findById(materiaId).orElseThrow();
+        return notaRepo.findByEstudianteIdAndMateria(estudianteId, materia);
     }
 
     @GetMapping("/nota-final/{estudianteId}/materia/{materiaId}")
