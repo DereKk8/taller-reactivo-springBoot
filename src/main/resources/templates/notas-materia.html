@@ -54,11 +54,10 @@
                 const estudianteId = pathParts[2];
                 const materiaId = pathParts[4];
                 // Obtener notas
-                fetch(`/api/notas/estudiante/${estudianteId}`)
+                fetch(`/api/notas/estudiante/${estudianteId}/materia/${materiaId}`)
                     .then(response => response.json())
                     .then(data => {
-                        // Filtrar solo las notas de la materia actual
-                        this.notas = data.filter(nota => nota.materia && nota.materia.id == materiaId);
+                        this.notas = data;
                     });
                 // Obtener nota final
                 fetch(`/api/notas/nota-final/${estudianteId}/materia/${materiaId}`)

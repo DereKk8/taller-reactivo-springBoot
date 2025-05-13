@@ -2,6 +2,10 @@ package com.ejemplo.notasapp.controlador;
 
 import com.ejemplo.notasapp.modelo.Estudiante;
 import com.ejemplo.notasapp.repositorio.RepositorioEstudiante;
+
+import jakarta.transaction.Transactional;
+
+import org.hibernate.annotations.CollectionTypeRegistrations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +30,7 @@ public class EstudianteRestController {
     }
 
     @PostMapping
+    @Transactional
     public Estudiante crear(@RequestBody Estudiante estudiante) {
         return estudianteRepo.save(estudiante);
     }
