@@ -1,5 +1,7 @@
 package com.ejemplo.notasapp.modelo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +22,7 @@ public class Nota {
     @JoinColumn(name = "materia_id")
     private Materia materia;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "estudiante_id")
     private Estudiante estudiante;
