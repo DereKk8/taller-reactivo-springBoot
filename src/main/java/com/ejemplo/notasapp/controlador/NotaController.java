@@ -80,11 +80,30 @@ public class NotaController {
     @PostMapping("/promedio")
     public String calcularPromedio(@RequestParam Long estudianteId,
             @RequestParam String materia,
-            Model model, Materia materiaF) {
-        double promedio = servicioNota.calcularPromedioPorMateria(estudianteId, materiaF);
+            Model model) {
+        Materia materiaObj = materiaRepo.findAll().stream()
+                .filter(m -> m.getNombre().equalsIgnoreCase(materia))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Materia no encontrada: " + materia));
+
+        double promedio = servicioNota.calcularPromedioPorMateria(estudianteId, materiaObj);
         model.addAttribute("promedio", promedio);
         model.addAttribute("estudianteId", estudianteId);
         model.addAttribute("materia", materia);
+        return "nota-promedio";
+    }
+
+    @GetMapping("/{estudianteId}/promedio/{materiaId}")
+    public String calcularPromedioPorMateriaId(@PathVariable Long estudianteId,
+            @PathVariable Long materiaId,
+            Model model) {
+        Materia materia = materiaRepo.findById(materiaId)
+                .orElseThrow(() -> new RuntimeException("Materia no encontrada con ID: " + materiaId));
+
+        double promedio = servicioNota.calcularPromedioPorMateria(estudianteId, materia);
+        model.addAttribute("promedio", promedio);
+        model.addAttribute("estudianteId", estudianteId);
+        model.addAttribute("materia", materia.getNombre());
         return "nota-promedio";
     }
 
